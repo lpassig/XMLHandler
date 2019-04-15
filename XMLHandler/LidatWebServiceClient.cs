@@ -19,7 +19,7 @@ namespace XMLHandler
     {
         private HttpClient _httpClient = null;
 
-        private Uri BaseAdress { get; } = new Uri(@"https://www.lidatexternal.liebherr.com");
+        private Uri BaseAdress { get; } = new Uri(@"https://www.yourwebsite.com");
 
         /// <summary>
         /// The Header for basic authentication
@@ -44,7 +44,7 @@ namespace XMLHandler
             try
             {
                 var httpClient = BuildClient();
-                var responseStream = await httpClient.GetStreamAsync($"/LidatExternal/Service.svc/LbcLidatDataFileList/{limit}");
+                var responseStream = await httpClient.GetStreamAsync($"/Sercice/Service.svc/service/{limit}");
 
                 XElement xelement = XElement.Load(responseStream);
                 IEnumerable<XElement> fileLinkElements = xelement.Descendants("File");
@@ -75,7 +75,7 @@ namespace XMLHandler
             {
                 foreach (var fileLink in fileLinks)
                 {
-                    string getUrl = $"/LidatExternal/Service.svc/LbcFile/{fileLink.Id}";
+                    string getUrl = $"/Service/Service.svc/File/{fileLink.Id}";
                     var responseString = await httpClient.GetStringAsync(getUrl);
 
                     if (!string.IsNullOrWhiteSpace(responseString))
